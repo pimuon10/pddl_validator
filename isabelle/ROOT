@@ -1,0 +1,44 @@
+session SASP_PDDL_Validation_prereq = HOL +
+  sessions
+    "HOL-Library"
+    "Certification_Monads"
+    "Show"
+    "Containers"
+    "Propositional_Proof_Systems"
+  theories [document = false]
+    "HOL-Library.Code_Char"
+    "HOL-Library.Code_Target_Nat"
+    "HOL-Library.Monad_Syntax"
+    "HOL-Library.Char_ord"
+    "HOL-Library.Code_Char"
+    "HOL-Library.Code_Target_Nat"
+    "HOL-Library.Rewrite"
+    "Certification_Monads.Error_Monad"
+    "Show.Show"
+    "HOL-Library.Rewrite"
+    "Containers.Containers"
+
+session SASP_PDDL_Validation = SASP_PDDL_Validation_prereq +
+  description {* PDDL SAS+ Validation *}
+  options [
+      document = pdf, 
+      document_output=output, 
+      document_variants = "document:outline=/proof,/ML"]
+  theories [document = false]
+    Error_Monad_Add
+  theories
+    PDDL_STRIPS_Semantics            
+    PDDL_STRIPS_Checker
+    invariant_verification
+    (*    
+    Parser_Combinator
+    PDDL_Checker
+    Parser_Combinator_Examples
+    PDDL_Checker_Export_Code
+    SASP_Checker
+    PDDL_Parser
+    SASP_Semantics
+    PDDL_Semantics            
+    *)
+  document_files
+    "root.tex"
