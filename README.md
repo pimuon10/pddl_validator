@@ -10,6 +10,7 @@ Building the validator
  3) Generate sml code equivalent to the Isabelle theories by running
 
     cd isabelle
+
     ./build.sh
 
   note the single quotes around <code>'$AFP'<code>!
@@ -24,9 +25,9 @@ Building the validator
 Using the validator
 ===================
 
- Given a pddl domain description file dom, a pddl instance inst, and a plan file pln, run:
+ Given a pddl domain description file (e.g. ged3-itt_no_invariants.pddl), a pddl instance (e.g. d-1-2.pddl), and a plan file (e.g. plan), run:
 
-    ./validate.sh dom inst pln
+    ./validate.sh ged3-itt_no_invariants.pddl d-1-2.pddl plan
 
  Note that the plan file has to have a plan in the IPC format, i.e. a list of action instances, each of which is as follows:
 
@@ -37,14 +38,15 @@ Using the validator
 Verifying invariants
 ====================
 
- Given a pddl domain description dom, with invariants in a fragment of DKEL [Haslum and Scholz 2003] that only allows the standard logical connectives ("and", "or", "not"), run:
+ Given a pddl domain description (e.g. ged3-itt_with_invariants.pddl), with invariants in a fragment of DKEL [Haslum and Scholz 2003] that only allows the standard logical connectives ("and", "or", "not"), run:
 
-    ./generate_invariant_theories.sh dom
+    ./generate_invariant_theories.sh ged3-itt_with_invariants.pddl
 
  This will generate an Isabelle theory file "prob_def.thy". Copy it to the directory ./isabelle and start Isabelle.
  
     cp prob_defs.thy ./isabelle
-    isabelle jedit ./isabelle/prob_defs.thy
+
+    isabelle jedit -d '$AFP' ./isabelle/prob_defs.thy
 
 
  This file has a bunch of Isabelle definitions and then  a validity lemma for each (action, invariant) pair. E.g. for the attached domain example ged3-itt.pddl, the file prob_defs.thy has a lemma "x_inverted_invariant_begin_cut" that indicates that the action "begin_cut" does not violate the invariant "x_inverted". Scrolling down in prob_defs.thy will stimulate Isabelle to run the proofs and highlight the lemmas that fail, indicating that the corresponding action could not be proven to conform to the invariant (in our experiments this only happened when the action violated the invariant). For instance in the "ged3-itt.pddl" example, the proof for the lemma "x_s_first_invariant_begin_cut" fails because the action "begin_cut" violates the invariant "x_s_first".
