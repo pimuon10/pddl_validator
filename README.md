@@ -12,8 +12,7 @@ Building the validator
     cd isabelle
 
     ./build.sh
-
-  note the single quotes around <code>'$AFP'<code>!
+  note the single quotes around <code>'$AFP'</code> in build.sh! 
   This will invoke Isabelle to check all proofs and re-generate the exported code, which is written to <code> isabelle/code/PDDL_STRIPS_Checker_Exported.sml</code>
 
  4) Download and install [MLton](http://mlton.org/) compiler version >= 20100608.
@@ -50,6 +49,8 @@ Verifying invariants
 
 
  This file has a bunch of Isabelle definitions and then  a validity lemma for each (action, invariant) pair. E.g. for the attached domain example ged3-itt.pddl, the file prob_defs.thy has a lemma "x_inverted_invariant_begin_cut" that indicates that the action "begin_cut" does not violate the invariant "x_inverted". Scrolling down in prob_defs.thy will stimulate Isabelle to run the proofs and highlight the lemmas that fail, indicating that the corresponding action could not be proven to conform to the invariant (in our experiments this only happened when the action violated the invariant). For instance in the "ged3-itt.pddl" example, the proof for the lemma "x_s_first_invariant_begin_cut" fails because the action "begin_cut" violates the invariant "x_s_first".
+
+Note: after opening the generated theory file with Isabelle, it might take a few minutes for it to build all the dependencies, as well as to check all the generated proofs.
 
 Proof document
 ==============
